@@ -1,12 +1,13 @@
 describe('for asynchronous', () => {
-  it('should return immediately and later trigger the callback', (done) => {
+  fit('should return immediately and later trigger the callback', (done) => {
     const logs = [];
     setTimeout(() => {
       logs.push('async callback triggered');
 
       // <--start
       // Please write down the correct value. You should write the final result directly.
-      const expected = undefined;
+      // console.log('我是logs的值', logs);
+      const expected = ['after calling setTimeout', 'async callback triggered'];
       // --end->
 
       expect(logs).toEqual(expected);
@@ -15,7 +16,8 @@ describe('for asynchronous', () => {
     logs.push('after calling setTimeout');
   });
 
-  it('should return immediately and later trigger the callback using promise', (done) => {
+  // https://www.cnblogs.com/lvdabao/p/es6-promise-1.html 解释了promise的用法,链式回调,es6新语法
+  fit('should return immediately and later trigger the callback using promise', (done) => {
     function setTimeoutUsingPromise(ms) {
       return new Promise(resolve => setTimeout(() => resolve(), ms));
     }
@@ -27,7 +29,7 @@ describe('for asynchronous', () => {
 
         // <--start
         // Please write down the correct value. You should write the final result directly.
-        const expected = undefined;
+        const expected = ['after calling setTimeout', 'async callback triggered'];
         // --end->
 
         expect(logs).toEqual(expected);
@@ -37,7 +39,12 @@ describe('for asynchronous', () => {
     logs.push('after calling setTimeout');
   });
 
-  it('should trigger failure using reject', (done) => {
+
+  // then(onfulfilled?: (value: any) , onrejected?: (reason: any)),
+  // then接收两个回调函数,是正儿八经的链式回调函数
+  // 如果promise中是resolve(value)设置的成功状态,则调用onfulfilled方法
+  // 如果promise中是reject(reason)设置的失败状态，则调用onrejected方法
+  fit('should trigger failure using reject', (done) => {
     function asyncOperationThatWillFail() {
       return new Promise((_, reject) => reject(new Error('>_<')));
     }
@@ -48,7 +55,7 @@ describe('for asynchronous', () => {
       .then(() => {
         // <--start
         // Please write down the correct value. You should write the final result directly.
-        const expected = undefined;
+        const expected = ['Failed! >_<'];
         // --end->
 
         expect(logs).toEqual(expected);
@@ -56,7 +63,9 @@ describe('for asynchronous', () => {
       });
   });
 
-  it('should trigger failure using reject and handle using catch', (done) => {
+
+  // .catch方法不仅可以对reject()状态作为回调函数进行处理,还可以对resolve()回调函数中得异常进行处理,不至于向外报错
+  fit('should trigger failure using reject and handle using catch', (done) => {
     function asyncOperationThatWillFail() {
       return new Promise((_, reject) => reject(new Error('>_<')));
     }
@@ -68,7 +77,7 @@ describe('for asynchronous', () => {
       .then(() => {
         // <--start
         // Please write down the correct value. You should write the final result directly.
-        const expected = undefined;
+        const expected = ['Caught! >_<'];
         // --end->
 
         expect(logs).toEqual(expected);
@@ -76,7 +85,7 @@ describe('for asynchronous', () => {
       });
   });
 
-  it('should propagate the error as the way of the sync code', (done) => {
+  fit('should propagate the error as the way of the sync code', (done) => {
     function asyncOperationThatWillFail() {
       return new Promise((_, reject) => reject(new Error('>_<')));
     }
@@ -93,7 +102,7 @@ describe('for asynchronous', () => {
       .then(() => {
         // <--start
         // Please write down the correct value. You should write the final result directly.
-        const expected = undefined;
+        const expected = ['Caught! >_<', 'Continued', 'Another continued', 'Error handled: Holy ~'];
         // --end->
         expect(logs).toEqual(expected);
         done();
