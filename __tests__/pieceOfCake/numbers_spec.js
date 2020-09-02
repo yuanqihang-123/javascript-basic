@@ -11,6 +11,7 @@ describe('for numbers', () => {
   });
 
   it('should be able to check if the number is NaN', () => {
+    // eslint-disable-next-line no-unused-vars
     const notNumber = 0 / 0;
 
     // <--start
