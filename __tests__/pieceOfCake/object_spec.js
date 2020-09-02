@@ -199,8 +199,10 @@ describe('for object', () => {
     expect(rabbit.speak('?_?')).toEqual(expected);
 
     const prototypeOfRabbitInstance = Object.getPrototypeOf(rabbit);
+    // eslint-disable-next-line no-unused-vars
     const rabbitFunctionPrototype = Rabbit.prototype;
     const prototypeOfRabbitFunction = Object.getPrototypeOf(Rabbit);
+    // eslint-disable-next-line no-unused-vars
     const functionPrototype = Function.prototype;
 
     // <--start

@@ -9,6 +9,7 @@ describe('for event', () => {
     const element = new EventEmitter();
     const logs = [];
 
+    // eslint-disable-next-line no-unused-vars
     function onClick() {
       logs.push('I have been clicked.');
       done();
